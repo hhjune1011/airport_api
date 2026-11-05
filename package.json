@@ -1,0 +1,12 @@
+{
+  "name": "icn-flight-board",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Incheon Airport flight information display",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

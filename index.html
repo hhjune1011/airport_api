@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#122b42" />
+  <meta name="description" content="인천국제공항 출발 및 도착 항공편 운항정보 전광판" />
+  <title>운항정보 | ICN Flight Board</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <div class="utility-bar">
+    <div class="container utility-inner"><span>INCHEON INTERNATIONAL AIRPORT</span><span>공항 운영정보 <span class="utility-divider">|</span> KST <strong id="global-clock">--:--:--</strong></span></div>
+  </div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="ICN Flight Board 홈">
+        <span class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 42 42" fill="none"><path d="M20.8 4.5v32M6 20.5h30M10.1 10.2l21.8 21.6M31.9 10.2 10.1 31.8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="21" cy="21" r="4.2" fill="currentColor"/></svg></span>
+        <span class="brand-copy"><strong>ICN <span>FLIGHT BOARD</span></strong><small>인천공항 운항정보</small></span>
+      </a>
+      <div class="header-meta"><span class="header-meta-label">AIRPORT CODE</span><strong>ICN <span class="header-slash">/</span> RKSI</strong></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro">
+      <div class="container intro-inner">
+        <div class="intro-copy">
+          <div class="eyebrow"><span class="eyebrow-line"></span> FLIGHT INFORMATION SYSTEM</div>
+          <h1>인천국제공항 <span>운항정보</span></h1>
+          <p>항공편의 예정 시각부터 게이트와 운항 상태까지 확인하세요.</p>
+        </div>
+        <div class="intro-mark" aria-hidden="true"><span>ICN</span><small>SEOUL / KOREA</small></div>
+      </div>
+    </section>
+
+    <div class="container main-content">
+      <div id="demo-banner" class="demo-banner" hidden><strong>예시 화면</strong><span>현재 표시된 항공편은 디자인 확인용 샘플 데이터이며 실제 운항정보가 아닙니다.</span><a href="/">실제 정보로 돌아가기</a></div>
+
+      <section class="toolbar-card" aria-label="항공편 검색 조건">
+        <div class="toolbar-heading">
+          <div class="flight-tabs" role="tablist" aria-label="운항 구분">
+            <button class="flight-tab active" id="tab-departures" role="tab" aria-selected="true" aria-controls="flight-panel" data-kind="departures"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m3 16 16-9 2 3-16 9-2-3Zm6-5-3-6 2-1 6 4M7 19l-1 3 4-1" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></svg>출발편 <span>DEPARTURES</span></button>
+            <button class="flight-tab" id="tab-arrivals" role="tab" aria-selected="false" aria-controls="flight-panel" data-kind="arrivals"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m3 9 16 9 2-3-16-9-2 3Zm6 5-3 6 2 1 6-4M7 6 6 3l4 1" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></svg>도착편 <span>ARRIVALS</span></button>
+          </div>
+          <div class="updated"><span class="pulse" aria-hidden="true"></span><span id="updated-label">연결 확인 중</span></div>
+        </div>
+        <form id="filter-form" class="filters" autocomplete="off">
+          <label class="field date-field"><span class="field-label">조회 날짜</span><span class="field-control"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M7 3v4M17 3v4M3 10h18" stroke="currentColor" stroke-width="1.7"/></svg><input id="date" type="date" required aria-label="조회 날짜" /></span></label>
+          <label class="field search-field"><span class="field-label">항공편 검색</span><span class="field-control"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.7" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input id="search" type="search" placeholder="편명, 항공사, 도시 또는 공항코드" aria-label="항공편 검색" /></span></label>
+          <label class="field select-field"><span class="field-label">터미널</span><span class="select-wrap"><select id="terminal" aria-label="터미널"><option value="all">전체 터미널</option><option value="T1">제1터미널</option><option value="T2">제2터미널</option></select></span></label>
+          <button class="reset-button" type="button" id="reset-filters" title="검색 조건 초기화"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.1-5.4M4 4v4h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>초기화</span></button>
+        </form>
+      </section>
+
+      <section class="overview" aria-label="조회 항공편 요약">
+        <div class="overview-card"><span class="overview-caption">조회 항공편</span><strong id="stat-total">—</strong><span class="overview-sub">현재 목록 기준</span></div>
+        <div class="overview-card"><span class="overview-caption">정상 및 예정</span><strong id="stat-normal">—</strong><span class="overview-sub"><i class="dot dot-blue"></i> ON SCHEDULE</span></div>
+        <div class="overview-card"><span class="overview-caption">지연</span><strong id="stat-delayed">—</strong><span class="overview-sub"><i class="dot dot-orange"></i> DELAYED</span></div>
+        <div class="overview-card"><span class="overview-caption">출발 및 도착 완료</span><strong id="stat-complete">—</strong><span class="overview-sub"><i class="dot dot-green"></i> COMPLETED</span></div>
+      </section>
+
+      <section class="board" id="flight-panel" role="tabpanel" aria-labelledby="tab-departures">
+        <div class="board-head">
+          <div><span class="section-index">FLIGHT SCHEDULE</span><h2 id="board-title">출발 항공편 <small>DEPARTURES</small></h2></div>
+          <div class="board-actions"><span id="result-count" class="result-count">0편 조회</span><button id="refresh" type="button" class="refresh-button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 11a8 8 0 0 0-13.9-5.2L4 8m0-5v5h5M4 13a8 8 0 0 0 13.9 5.2L20 16m0 5v-5h-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>새로고침</button></div>
+        </div>
+        <div class="status-filters" role="group" aria-label="운항 상태별 필터"><button type="button" class="status-filter active" data-status="all" aria-pressed="true">전체</button><button type="button" class="status-filter" data-status="normal" aria-pressed="false">정상 및 예정</button><button type="button" class="status-filter" data-status="boarding" aria-pressed="false">탑승 중</button><button type="button" class="status-filter" data-status="delayed" aria-pressed="false">지연</button><button type="button" class="status-filter" data-status="complete" aria-pressed="false">운항 완료</button><button type="button" class="status-filter" data-status="cancelled" aria-pressed="false">결항</button></div>
+        <div class="board-status"><span id="board-status-text">항공편 정보를 불러오는 중입니다.</span><span>LOCAL TIME <b>KST (UTC+9)</b></span></div>
+        <div class="table-scroll"><table class="flight-table"><thead><tr><th scope="col">예정</th><th scope="col">변경</th><th scope="col">편명</th><th scope="col">항공사</th><th scope="col" id="city-header">목적지</th><th scope="col">터미널 / 게이트</th><th scope="col">운항 상태</th><th scope="col"><span class="sr-only">상세보기</span></th></tr></thead><tbody id="flight-rows"></tbody></table></div>
+        <div id="empty-state" class="empty-state" hidden><span class="empty-symbol" aria-hidden="true">ICN</span><strong id="empty-title">조회된 항공편이 없습니다.</strong><p id="empty-description">다른 날짜나 검색 조건을 확인해 주세요.</p><button id="demo-button" type="button" hidden>예시 데이터로 디자인 보기</button></div>
+        <div id="more-container" class="more-container" hidden><button id="load-more" type="button">항공편 더 보기 <span id="more-count"></span></button></div>
+        <div class="board-footer"><span id="page-note">공공데이터 조회 결과 기준으로 표시됩니다.</span><span>항공편 선택 시 상세정보 확인 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span></div>
+      </section>
+
+      <aside class="notice"><div class="notice-icon" aria-hidden="true">i</div><div><strong>이용 안내</strong><p>본 화면은 인천국제공항공사 공공데이터를 바탕으로 제공합니다. 운항 시각과 게이트는 현장 상황에 따라 변경될 수 있으므로 탑승 전 항공사 또는 공항의 공식 안내를 확인하세요.</p></div><a href="https://www.airport.kr" target="_blank" rel="noopener noreferrer">인천공항 공식 홈페이지 <span aria-hidden="true">↗</span></a></aside>
+    </div>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-inner"><div><strong>ICN <span>FLIGHT BOARD</span></strong><p>Independent flight information viewer</p></div><div><span>DATA PROVIDER</span><strong>인천국제공항공사</strong><a href="https://www.data.go.kr/data/15140153/openapi.do" target="_blank" rel="noopener noreferrer">공공데이터포털 원본 API ↗</a></div><small>본 사이트는 인천국제공항 공식 웹사이트가 아닙니다.</small></div></footer>
+
+  <dialog id="flight-dialog" aria-labelledby="detail-title"><div class="dialog-top"><span>FLIGHT DETAILS</span><button type="button" id="close-dialog" aria-label="상세정보 닫기">×</button></div><div class="dialog-body"><span class="detail-section">항공편 상세정보</span><h2 id="detail-title">—</h2><p id="detail-route">—</p><div id="detail-status"></div><dl id="detail-list"></dl></div><div class="dialog-bottom">정보는 예고 없이 변경될 수 있습니다. 정확한 운항 현황은 항공사에 확인하세요.</div></dialog>
+</body>
+</html>
